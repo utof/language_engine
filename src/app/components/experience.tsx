@@ -24,7 +24,7 @@ export function Experience() {
           trigger: container.current,
           pin: true,
           start: "top top",
-          end: "+=9000", // Increased length for the new scene
+          end: "+=11000", // Increased scroll length
           scrub: 1,
         },
       });
@@ -40,7 +40,6 @@ export function Experience() {
 
       const definitionTl = gsap.timeline();
       tl.add(definitionTl, "<1");
-
       definitionTl.from(".definition-scene .subtitle", {
         text: "",
         duration: 3,
@@ -63,7 +62,6 @@ export function Experience() {
       );
 
       // --- Scene 2 -> 3: Definition to Axioms ---
-      // Crossfade from Definition to Axioms
       tl.to(".definition-scene-container", { opacity: 0, duration: 2 });
       tl.fromTo(
         ".axioms-scene-container",
@@ -72,18 +70,10 @@ export function Experience() {
         "<"
       );
 
-      // --- Scene 3: Axioms Animations ---
       const axiomsTl = gsap.timeline();
-      tl.add(axiomsTl, "<1"); // Start animating axioms shortly after it appears
-
-      // Animate each letter towards the vortex
+      tl.add(axiomsTl, "<1");
       axiomsTl.to(".axiom-letter", {
-        // Stagger the animation for each letter
-        stagger: {
-          each: 0.05,
-          from: "random", // Start from a random letter for a chaotic effect
-        },
-        // Move letters towards the vortex area
+        stagger: { each: 0.05, from: "random" },
         x: () => `+=${gsap.utils.random(200, 400)}`,
         y: () => `+=${gsap.utils.random(-100, 100)}`,
         opacity: 0,
@@ -91,22 +81,43 @@ export function Experience() {
         duration: 5,
         ease: "power2.in",
       });
-
-      // Fade out the "What Is It?" title along with the letters
       axiomsTl.to(
         ".axioms-scene-container .text-3xl",
-        {
-          opacity: 0,
-          duration: 2,
-        },
+        { opacity: 0, duration: 2 },
         "<"
-      ); // Start at the same time as the letter animation
+      );
 
-      // Fade out the entire Axioms Scene
-      tl.to(".axioms-scene-container", {
-        opacity: 0,
-        duration: 2,
+      // --- Scene 3 -> 4: Axioms to Ritual ---
+      tl.to(".axioms-scene-container", { opacity: 0, duration: 2 });
+      tl.fromTo(
+        ".ritual-scene-container",
+        { opacity: 0 },
+        { opacity: 1, duration: 2 },
+        "<"
+      );
+
+      const ritualTl = gsap.timeline();
+      tl.add(ritualTl, "<1");
+
+      // Animate the "breathing" effect on each line of text.
+      ritualTl.to(".ritual-line", {
+        letterSpacing: "0.15em", // Expand letter spacing
+        fontWeight: 200, // Become thinner
+        yoyo: true, // <-- FIX: Add yoyo to reverse the animation
+        repeat: 1, // <-- FIX: Ensure it plays forward and back once
+        duration: 4,
+        stagger: 0.5,
+        ease: "power2.inOut", // Use a smoother ease
       });
+
+      // --- Scene 4 -> 5: Ritual to Signature ---
+      tl.to(".ritual-scene-container", { opacity: 0, duration: 2 });
+      tl.fromTo(
+        ".signature-scene-container",
+        { opacity: 0 },
+        { opacity: 1, duration: 2 },
+        "<"
+      );
     },
     { scope: container }
   );
@@ -122,7 +133,6 @@ export function Experience() {
       <div className="absolute inset-0 opacity-0 axioms-scene-container">
         <AxiomsScene />
       </div>
-      {/* The other scenes are here but remain invisible for now */}
       <div className="absolute inset-0 opacity-0 ritual-scene-container">
         <RitualScene />
       </div>
