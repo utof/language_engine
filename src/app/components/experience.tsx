@@ -19,12 +19,16 @@ export function Experience() {
 
   useGSAP(
     () => {
+      // Target the filter elements once
+      const displacement = document.getElementById("liquid-displacement");
+      const turbulence = document.getElementById("liquid-turbulence");
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container.current,
           pin: true,
           start: "top top",
-          end: "+=11000", // Increased scroll length
+          end: "+=11000",
           scrub: 1,
         },
       });
@@ -38,17 +42,35 @@ export function Experience() {
         "<"
       );
 
+      // --- Scene 2: Definition Animations ---
       const definitionTl = gsap.timeline();
       tl.add(definitionTl, "<1");
+
+      // Animate the subtitle typing
       definitionTl.from(".definition-scene .subtitle", {
         text: "",
         duration: 3,
         ease: "none",
       });
+
+      // **FILTER ANIMATION: Increase distortion intensity as the title splits**
+      definitionTl.to(
+        displacement,
+        { attr: { scale: 100 } }, // Increase scale to 100 for a strong pull
+        "+=0.5" // Start this slightly after typing finishes
+      );
+      // **FILTER ANIMATION: Animate the noise pattern for a "boiling" effect**
+      definitionTl.to(
+        turbulence,
+        { attr: { baseFrequency: "0.04 0.08" } }, // Change the noise frequency
+        "<" // Do this at the same time
+      );
+
+      // Animate the title splitting apart
       definitionTl.to(
         ".definition-scene .title-part-1",
         { yPercent: -150, autoAlpha: 0 },
-        "+=1"
+        "<"
       );
       definitionTl.to(
         ".definition-scene .title-part-2",
@@ -60,6 +82,9 @@ export function Experience() {
         { autoAlpha: 0, duration: 1 },
         "<"
       );
+
+      // **FILTER ANIMATION: Reset the filter to 0 as the scene fades out**
+      definitionTl.to(displacement, { attr: { scale: 0 } }, "<");
 
       // --- Scene 2 -> 3: Definition to Axioms ---
       tl.to(".definition-scene-container", { opacity: 0, duration: 2 });
@@ -98,16 +123,14 @@ export function Experience() {
 
       const ritualTl = gsap.timeline();
       tl.add(ritualTl, "<1");
-
-      // Animate the "breathing" effect on each line of text.
       ritualTl.to(".ritual-line", {
-        letterSpacing: "0.15em", // Expand letter spacing
-        fontWeight: 200, // Become thinner
-        yoyo: true, // <-- FIX: Add yoyo to reverse the animation
-        repeat: 1, // <-- FIX: Ensure it plays forward and back once
+        letterSpacing: "0.15em",
+        fontWeight: 200,
+        yoyo: true,
+        repeat: 1,
         duration: 4,
         stagger: 0.5,
-        ease: "power2.inOut", // Use a smoother ease
+        ease: "power2.inOut",
       });
 
       // --- Scene 4 -> 5: Ritual to Signature ---
