@@ -1,10 +1,8 @@
-// Using an icon library for github is fine, but for now we'll use text
-// to keep dependencies minimal.
-// import { Github } from "lucide-react"; 
-
-export function SignatureScene() {
+export function SignatureScene({ className }: { className?: string }) {
   return (
-    <section className="relative h-screen w-full flex items-center justify-center p-8">
+    <section
+      className={`relative h-screen w-full flex items-center justify-center p-8 ${className}`}
+    >
       <div className="text-center max-w-2xl">
         <h2 className="text-5xl font-medium mb-12">∴</h2>
         <div className="space-y-3 text-xl text-foreground/80 mb-12">
@@ -12,7 +10,7 @@ export function SignatureScene() {
           <p>You can ignore it.</p>
           <p>But you will run it.</p>
           <p>The Language Engine is already live.</p>
-          <p className="mt-8">Made by {process.env.NEXT_PUBLIC_USER_LOGIN || "utof"}.</p>
+          <p className="mt-8">Made by utof.</p>
         </div>
         <div className="flex flex-col items-center justify-center space-y-6">
           <a
@@ -22,9 +20,15 @@ export function SignatureScene() {
             Commission an engine.
           </a>
           <div className="flex space-x-4 text-foreground/60">
-            <a href="#" className="hover:text-foreground">mastodon</a>
-            <a href="#" className="hover:text-foreground">github</a>
-            <a href="#" className="hover:text-foreground">nowhere</a>
+            <a href="#" className="hover:text-foreground">
+              mastodon
+            </a>
+            <a href="#" className="hover:text-foreground">
+              github
+            </a>
+            <a href="#" className="hover:text-foreground">
+              nowhere
+            </a>
           </div>
         </div>
       </div>
