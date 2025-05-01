@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
-import "./globals.css"; // Your new globals.css file
+import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Vein } from "@/app/components/vein";
 
-// We'll load IBM Plex Mono and assign it to the --font-mono CSS variable
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
-  variable: "--font-mono", // Assign to the --font-mono variable
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -23,13 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        // We use font-mono as the base font for the entire project
         className={cn(
-          "min-h-screen bg-background font-mono text-foreground antialiased",
+          "min-h-screen text-foreground antialiased",
           ibmPlexMono.variable
         )}
       >
-        {children}
+        <div className="absolute inset-0 -z-20 bg-background" />
+        <Vein />
+        <div className="relative z-0">{children}</div>
       </body>
     </html>
   );
