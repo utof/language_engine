@@ -3,6 +3,7 @@ import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Vein } from "@/app/components/vein";
+import { SVGFilters } from "./components/svg-filters";
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
         )}
       >
         <div className="absolute inset-0 -z-20 bg-background" />
+        <SVGFilters />
         <Vein />
         <div className="relative z-0">{children}</div>
       </body>

@@ -122,3 +122,8 @@ font-family: var(font-mono), monospace;
     font-family: var(--font-mono), monospace;
   }
 }
+
+.filter-liquid {
+  /* This applies the SVG filter with the ID "liquid-distortion" */
+  filter: url(#liquid-distortion);
+}
